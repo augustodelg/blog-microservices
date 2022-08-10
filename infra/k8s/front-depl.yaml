@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+        - name: front
+          image: augustodelg/blog-front
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-srv
+spec:
+  type: NodePort
+  selector:
+    app: front
+  ports:
+    - name: front
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
